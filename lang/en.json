@@ -1,0 +1,11 @@
+{
+    "settings": {
+        "actorConverter": {
+            "label": "Actor Converter",
+            "from": "From",
+            "to": "To",
+            "convertAll": "Convert All Actors",
+            "convertMap": "Convert All Actors On Map"
+        }
+    }
+}

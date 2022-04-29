@@ -1,0 +1,24 @@
+ <form autocomplete="off" onsubmit="event.preventDefault();">
+    <div>
+        <div class="flexrow">
+            <div class="convert-col">
+                <label>{{localize "settings.actorConverter.from"}}</label>
+                <select name="from" id="from">
+                    {{#each options}}
+                        <option value={{this.value}} {{#if (boolean this.value ../from)}}selected{{/if}}>{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="convert-col">
+                <label>{{localize "settings.actorConverter.to"}}</label>
+                <select name="to" id="to">
+                    {{#each options}}
+                        <option value={{this.value}} {{#if (boolean this.value ../to)}}selected{{/if}}>{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <button id="convert-all" class="menu-element">{{localize "settings.actorConverter.convertAll"}}</button>
+        <button id="convert-map" class="menu-element">{{localize "settings.actorConverter.convertMap"}}</button>
+    </div>
+ </form>

@@ -1,0 +1,20 @@
+{
+    "name": "combat-hp-display",
+    "title": "Combat HP Display",
+    "description": "Display HP bars in combat. Hover display outside of combat.",
+    "author": "HarryBoy",
+    "esmodules": [
+        "combat-hp-display.js"
+    ],
+     "styles": [
+         "styles/combat-hp-display.css"
+     ],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        }
+    ],
+    "version": "1.0.0"
+  }
