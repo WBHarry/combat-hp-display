@@ -18,5 +18,6 @@
     ],
     "version": "1.0.0",
     "minimumCoreVersion": "8",
-    "compatibleCoreVersion":"9"
+    "compatibleCoreVersion":"9",
+    "url": "https://github.com/WBHarry/combat-hp-display"
   }
