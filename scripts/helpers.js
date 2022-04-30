@@ -1,7 +1,7 @@
 export const hpDisplayModes = [
     {
         name: 'Never Displayed',
-        value: 0,
+        value: 1,
     },
     {
         name: 'When Controlled',

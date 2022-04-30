@@ -34,8 +34,11 @@ Hooks.once('init', function() {
         scope: "world",
         config: true,
         type: Number,
-        choices: displayChoises,
-        default: 30,
+        choices: {
+            0: "Precombat Value",
+            ...displayChoises
+        },
+        default: 0,
         onChange: value => {
             game.settings.set("combat-hp-display", "out-of-combat-display", value);
         }
@@ -63,6 +66,7 @@ Hooks.on('updateCombat', combat => {
     if(game.user.isGM){
         const inCombat = game.settings.get("combat-hp-display", "combat-display");
         combat.data.combatants.forEach(combatant => {
+            combatant.token.update({"flags.combat-hp-display": combatant.token.data.displayBars});
             combatant.token.update({displayBars: inCombat});
         });
     }
@@ -72,7 +76,8 @@ Hooks.on('deleteCombat', combat => {
     if(game.user.isGM){
         const outOfCombat = game.settings.get("combat-hp-display", "out-of-combat-display");
         combat.data.combatants.forEach(combatant => {
-            combatant.token.update({displayBars: outOfCombat});
+            const newDisplayBars = outOfCombat === 0 ? combatant.token.data.flags["combat-hp-display"] : outOfCombat;
+            combatant.token.update({displayBars: newDisplayBars});
         });
     }
 });
