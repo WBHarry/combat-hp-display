@@ -1,7 +1,8 @@
 {
     "settings": {
         "actorConverter": {
-            "label": "Actor Converter",
+            "label": "Actor Displaybar Converter",
+            "menuButton": "Displaybar Convert Setup",
             "from": "From",
             "to": "To",
             "convertAll": "Convert All Actors",

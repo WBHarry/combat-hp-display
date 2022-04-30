@@ -4,7 +4,7 @@ import { hpDisplayModes } from './scripts/helpers.js';
 Hooks.once('init', function() {
     game.settings.registerMenu("combat-hp-display", "actor-converter", {
         name: game.i18n.localize('settings.actorConverter.label'),
-        label: "",
+        label: game.i18n.localize('settings.actorConverter.menuButton'),
         hint: "",
         icon: "fas fa-solid fa-shapes",
         type: CombatHpDisplayMenu,

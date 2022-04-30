@@ -1,7 +1,7 @@
 {
     "name": "combat-hp-display",
     "title": "Combat HP Display",
-    "description": "Display HP bars in combat. Hover display outside of combat.",
+    "description": "A module for automatically changing how displaybars such as HP are shown on tokens when entering and leaving combat.",
     "author": "HarryBoy",
     "esmodules": [
         "combat-hp-display.js"
