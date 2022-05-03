@@ -4,7 +4,7 @@
             <div class="convert-col">
                 <label>{{localize "settings.actorConverter.from"}}</label>
                 <select name="from" id="from">
-                    {{#each options}}
+                    {{#each optionsFrom}}
                         <option value={{this.value}} {{#if (boolean this.value ../from)}}selected{{/if}}>{{this.name}}</option>
                     {{/each}}
                 </select>
@@ -12,7 +12,7 @@
             <div class="convert-col">
                 <label>{{localize "settings.actorConverter.to"}}</label>
                 <select name="to" id="to">
-                    {{#each options}}
+                    {{#each optionsTo}}
                         <option value={{this.value}} {{#if (boolean this.value ../to)}}selected{{/if}}>{{this.name}}</option>
                     {{/each}}
                 </select>

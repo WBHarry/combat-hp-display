@@ -24,7 +24,11 @@ export default class CombatHpDisplayMenu extends FormApplication {
     getData() {
         return {
             ...this.settings,
-            options: hpDisplayModes
+            optionsFrom: [
+                { value: 60, name: 'All Display Types' },
+                ,...hpDisplayModes
+            ],
+            optionsTo: hpDisplayModes,
         }
     }
 
@@ -52,36 +56,33 @@ export default class CombatHpDisplayMenu extends FormApplication {
             });
         });
 
-        html.find("#convert-all").click((event) => {
-          event.stopPropagation();
-          event.preventDefault();
-          const from = translateCustomDisplayModes(this.settings.from);
-          const to = translateCustomDisplayModes(this.settings.to);
-          game.actors.forEach(actor => {
-            if(actor.data.token.displayBars === from){
-                actor.data.document.update({
-                    'token.displayBars': to
-                });
-            }
-          })
+        html.find("#convert-all").click(async (event) => {
+          const actors = Array.from(game.actors);
+          await this.convertDisplayBars(event, actors);
         });
 
-        html.find("#convert-map").click((event) => {
-            event.stopPropagation();
-            event.preventDefault();
-            const from = translateCustomDisplayModes(this.settings.from);
-            const to = translateCustomDisplayModes(this.settings.to);
-            game.canvas.tokens.objects.children.forEach(token => {
-                const actor = token.document.actor;
-                if(actor.data.token.displayBars === from){
-                    actor.data.document.update({
-                        'token.displayBars': to
-                    });
-                    token.document.update({
+        html.find("#convert-map").click(async (event) => {
+            const actors = game.canvas.tokens.objects.children.map(x => x.document.actor);
+            await this.convertDisplayBars(event, actors);
+          });
+    }
+
+    async convertDisplayBars(event, actors){
+        event.stopPropagation();
+        event.preventDefault();
+        const from = translateCustomDisplayModes(this.settings.from);
+        const to = translateCustomDisplayModes(this.settings.to);
+        for(var i = 0; i < actors.length; i++){
+            const actor = actors[i];
+            if(from === 60 || actor.data.token.displayBars === from){
+                await Actor.updateDocuments([{_id: actor.id, ['token.displayBars']: to}]);
+                const activeTokens = actor.getActiveTokens();
+                for(var j = 0; j < activeTokens.length; j++){
+                    await activeTokens[j].document.update({
                         'displayBars': to
                     });
                 }
-            });
-          });
+            }
+        }
     }
 }

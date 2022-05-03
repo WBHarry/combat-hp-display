@@ -62,22 +62,28 @@ Hooks.once('init', function() {
     });
 });
 
-Hooks.on('updateCombat', combat => {
+Hooks.on('updateCombat', async combat => {
     if(game.user.isGM){
         const inCombat = game.settings.get("combat-hp-display", "combat-display");
-        combat.data.combatants.forEach(combatant => {
-            combatant.token.update({"flags.combat-hp-display": combatant.token.data.displayBars});
-            combatant.token.update({displayBars: translateCustomDisplayModes(inCombat)});
-        });
+        const combatants = Array.from(combat.data.combatants);
+        for(var i = 0; i < combatants.length; i++) {
+            const combatant = combatants[i]
+            await combatant.token.update({
+                "flags.combat-hp-display": combatant.token.data.displayBars,
+                displayBars: translateCustomDisplayModes(inCombat)
+            });
+        }
     }
 });
 
 Hooks.on('deleteCombat', combat => {
     if(game.user.isGM){
         const outOfCombat = game.settings.get("combat-hp-display", "out-of-combat-display");
-        combat.data.combatants.forEach(combatant => {
+        const combatants = Array.from(combat.data.combatants);
+        for(var i = 0; i < combatants.length; i++) {
+            const combatant = combatants[i];
             const newDisplayBars = translateCustomDisplayModes(outOfCombat, combatant.token.data.flags["combat-hp-display"]);
             combatant.token.update({displayBars: newDisplayBars});
-        });
+        }
     }
 });
