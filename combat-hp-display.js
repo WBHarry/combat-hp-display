@@ -76,7 +76,7 @@ Hooks.on('deleteCombat', combat => {
     if(game.user.isGM){
         const outOfCombat = game.settings.get("combat-hp-display", "out-of-combat-display");
         combat.data.combatants.forEach(combatant => {
-            const newDisplayBars = outOfCombat === 0 ? combatant.token.data.flags["combat-hp-display"] : outOfCombat;
+            const newDisplayBars = outOfCombat === 0 ? combatant.token.data.flags["combat-hp-display"] : outOfCombat === 1 ? 0 : outOfCombat;
             combatant.token.update({displayBars: newDisplayBars});
         });
     }
