@@ -1,5 +1,5 @@
 import CombatHpDisplayMenu from './module/CombatHpDisplayMenu.js';
-import { hpDisplayModes } from './scripts/helpers.js';
+import { hpDisplayModes, translateCustomDisplayModes } from './scripts/helpers.js';
 
 Hooks.once('init', function() {
     game.settings.registerMenu("combat-hp-display", "actor-converter", {
@@ -67,7 +67,7 @@ Hooks.on('updateCombat', combat => {
         const inCombat = game.settings.get("combat-hp-display", "combat-display");
         combat.data.combatants.forEach(combatant => {
             combatant.token.update({"flags.combat-hp-display": combatant.token.data.displayBars});
-            combatant.token.update({displayBars: inCombat});
+            combatant.token.update({displayBars: translateCustomDisplayModes(inCombat)});
         });
     }
 });
@@ -76,7 +76,7 @@ Hooks.on('deleteCombat', combat => {
     if(game.user.isGM){
         const outOfCombat = game.settings.get("combat-hp-display", "out-of-combat-display");
         combat.data.combatants.forEach(combatant => {
-            const newDisplayBars = outOfCombat === 0 ? combatant.token.data.flags["combat-hp-display"] : outOfCombat === 1 ? 0 : outOfCombat;
+            const newDisplayBars = translateCustomDisplayModes(outOfCombat, combatant.token.data.flags["combat-hp-display"]);
             combatant.token.update({displayBars: newDisplayBars});
         });
     }

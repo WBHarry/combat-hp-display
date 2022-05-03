@@ -1,4 +1,4 @@
-import { useTemplatesPath, hpDisplayModes } from '../scripts/helpers.js';
+import { useTemplatesPath, hpDisplayModes, translateCustomDisplayModes } from '../scripts/helpers.js';
 
 export default class CombatHpDisplayMenu extends FormApplication {
     constructor() {
@@ -55,10 +55,12 @@ export default class CombatHpDisplayMenu extends FormApplication {
         html.find("#convert-all").click((event) => {
           event.stopPropagation();
           event.preventDefault();
+          const from = translateCustomDisplayModes(this.settings.from);
+          const to = translateCustomDisplayModes(this.settings.to);
           game.actors.forEach(actor => {
-            if(actor.data.token.displayBars === this.settings.from){
+            if(actor.data.token.displayBars === from){
                 actor.data.document.update({
-                    'token.displayBars': this.settings.to
+                    'token.displayBars': to
                 });
             }
           })
@@ -67,16 +69,16 @@ export default class CombatHpDisplayMenu extends FormApplication {
         html.find("#convert-map").click((event) => {
             event.stopPropagation();
             event.preventDefault();
+            const from = translateCustomDisplayModes(this.settings.from);
+            const to = translateCustomDisplayModes(this.settings.to);
             game.canvas.tokens.objects.children.forEach(token => {
                 const actor = token.document.actor;
-                if(token.data.displayBars === this.settings.from){
-                    token.document.update({
-                        'displayBars': this.settings.to
-                    });
-                }
-                if(actor.data.token.displayBars === this.settings.from){
+                if(actor.data.token.displayBars === from){
                     actor.data.document.update({
-                        'token.displayBars': this.settings.to
+                        'token.displayBars': to
+                    });
+                    token.document.update({
+                        'displayBars': to
                     });
                 }
             });

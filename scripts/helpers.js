@@ -25,6 +25,10 @@ export const hpDisplayModes = [
     },
 ];
 
+export const translateCustomDisplayModes = (customDisplayMode, flag) => {
+    return customDisplayMode === 0 && flag ? flag : customDisplayMode === 1 ? 0 : customDisplayMode; 
+};
+
 export function useProjectPath(innerPath) {
     return `modules/combat-hp-display/${innerPath}`;
 }
