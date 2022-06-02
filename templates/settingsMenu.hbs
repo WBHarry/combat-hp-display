@@ -1,0 +1,32 @@
+ <form autocomplete="off" onsubmit="event.preventDefault();">
+     <header>
+         <h2>Display Bar Settings</h2>
+     </header>
+    <div class="flexrow display-settings-titles">
+        <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.hpDisplaySettings.outOfCombat"}}</strong></label>
+        <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.hpDisplaySettings.inCombat"}}</strong></label>
+    </div>
+    <div class="flexcol">
+        {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
+            type="friendly" 
+            outOfCombatSelected=outOfCombat.friendly
+            combatSelected=combat.friendly
+            label="combat-hp-display.hpDisplaySettings.friendlyTokens" 
+        }}
+        {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
+            type="neutral" 
+            outOfCombatSelected=outOfCombat.neutral
+            combatSelected=combat.neutral
+            label="combat-hp-display.hpDisplaySettings.neutralTokens"    
+        }}
+        {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
+            type="hostile" 
+            outOfCombatSelected=outOfCombat.hostile
+            combatSelected=combat.hostile
+            label="combat-hp-display.hpDisplaySettings.hostileTokens"   
+        }}
+    </div>
+    <footer class="sheet-footer flexrow settings-footer">
+        <button id="save"><i class="far fa-save"></i>Save Changes</button>
+    </footer>
+ </form>

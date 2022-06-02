@@ -12,7 +12,7 @@ export default class CombatHpDisplayMenu extends FormApplication {
       const overrides = {
         height: 'auto',
         id: 'combat-hp-display',
-        template: useTemplatesPath('menu.hbs'),
+        template: useTemplatesPath('convertMenu.hbs'),
         width: 'auto',
       };
       

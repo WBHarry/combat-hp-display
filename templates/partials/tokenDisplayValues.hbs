@@ -1,0 +1,16 @@
+ <div class="combat-hp-display-flex">
+    <div class="flex1 flexcol">
+        {{!-- <label><strong>{{localize this.label}}</strong></label> --}}
+        <div class="flexrow">
+            {{#if (eq this.type 'friendly')}}<i class="far fa-grin-beam token-display-icon flex0" title="{{localize "combat-hp-display.hpDisplaySettings.friendlyTokens"}}"></i>{{/if}}
+            {{#if (eq this.type 'neutral')}}<i class="far fa-meh token-display-icon flex0" title="{{localize "combat-hp-display.hpDisplaySettings.neutralTokens"}}"></i>{{/if}}
+            {{#if (eq this.type 'hostile')}}<i class="far fa-angry token-display-icon flex0" title="{{localize "combat-hp-display.hpDisplaySettings.hostileTokens"}}"></i>{{/if}}
+            <select name="outOfCombat.{{this.type}}">
+                {{selectOptions this.displayChoises selected=outOfCombatSelected}}
+            </select>
+            <select name="combat.{{this.type}}">
+                {{selectOptions this.displayChoises selected=combatSelected}}
+            </select>
+        </div>
+    </div>
+</div>

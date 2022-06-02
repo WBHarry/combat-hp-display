@@ -25,6 +25,17 @@ export const hpDisplayModes = [
     },
 ];
 
+export const getDisplayMode = (disposition) => {
+    switch(disposition){
+        case -1:
+            return 'hostile';
+        case 0:
+            return 'neutral';
+        case 1:
+            return 'friendly';
+    }
+};
+
 export const translateCustomDisplayModes = (customDisplayMode, flag) => {
     return customDisplayMode === 0 && flag ? flag : customDisplayMode === 1 ? 0 : customDisplayMode; 
 };

@@ -1,5 +1,5 @@
 {
-    "settings": {
+    "combat-hp-display": {
         "actorConverter": {
             "label": "Actor Displaybar Converter",
             "menuButton": "Displaybar Convert Setup",
@@ -7,6 +7,15 @@
             "to": "To",
             "convertAll": "Convert All Actors",
             "convertMap": "Convert All Actors On Map"
+        },
+        "hpDisplaySettings": {
+            "label": "Resource Bars",
+            "menuButton": "Settings",
+            "outOfCombat": "Out Of Combat",
+            "inCombat": "In Combat",
+            "friendlyTokens": "Friendly Token Settings",
+            "neutralTokens": "Neutral Token Settings",
+            "hostileTokens": "Hostile Token Settings"
         }
     }
 }

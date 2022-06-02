@@ -1,65 +1,11 @@
-import CombatHpDisplayMenu from './module/CombatHpDisplayMenu.js';
-import { hpDisplayModes, translateCustomDisplayModes } from './scripts/helpers.js';
+import { translateCustomDisplayModes, useTemplatesPath, getDisplayMode } from './scripts/helpers.js';
+import { registerGameSettings } from './scripts/setup.js';
 
 Hooks.once('init', function() {
-    game.settings.registerMenu("combat-hp-display", "actor-converter", {
-        name: game.i18n.localize('settings.actorConverter.label'),
-        label: game.i18n.localize('settings.actorConverter.menuButton'),
-        hint: "",
-        icon: "fas fa-solid fa-shapes",
-        type: CombatHpDisplayMenu,
-        restricted: true
-      });
-
-    game.settings.register('combat-hp-display', 'convert-settings', {
-        name: 'Convert Settings',
-        hint: 'Convert Settings',
-        scope: 'world',
-        default: {
-            from: 50,
-            to: 30,
-        },
-        config: false,
-        type: Object,
-    });
-
-    const displayChoises = hpDisplayModes.reduce((choices, option) => ({
-        ...choices,
-        [option.value]: option.name
-    }), {});
-
-    game.settings.register("combat-hp-display", "out-of-combat-display", {
-        name: "Out Of Combat HP Display",
-        hint: "The HP Display behehavior used when not in combat",
-        scope: "world",
-        config: true,
-        type: Number,
-        choices: {
-            0: "Precombat Value",
-            ...displayChoises
-        },
-        default: 0,
-        onChange: value => {
-            game.settings.set("combat-hp-display", "out-of-combat-display", value);
-        }
-    });
-    
-    game.settings.register("combat-hp-display", "combat-display", {
-        name: "Combat HP Display",
-        hint: "The HP Display behehavior used when in combat",
-        scope: "world",
-        config: true,
-        type: Number,
-        choices: displayChoises,
-        default: 50,
-        onChange: value => {
-            game.settings.set("combat-hp-display", "combat-display", value);
-        }
-    });
-
-    Handlebars.registerHelper('boolean', function(arg1, arg2) {
-        return arg1 == arg2;
-    });
+    registerGameSettings();
+    loadTemplates([
+        useTemplatesPath('partials/tokenDisplayValues.hbs'),
+    ]);
 });
 
 Hooks.on('updateCombat', async combat => {
@@ -67,10 +13,13 @@ Hooks.on('updateCombat', async combat => {
         const inCombat = game.settings.get("combat-hp-display", "combat-display");
         const combatants = Array.from(combat.data.combatants);
         for(var i = 0; i < combatants.length; i++) {
-            const combatant = combatants[i]
+            const combatant = combatants[i];
+            const combatantDisplayMode = getDisplayMode(combatant.token.data.disposition);
+            const displayBarValue = translateCustomDisplayModes(inCombat[combatantDisplayMode]);
+            const newDisplayBar = displayBarValue ? { displayBars: displayBarValue } : {};
             await combatant.token.update({
                 "flags.combat-hp-display": combatant.token.data.displayBars,
-                displayBars: translateCustomDisplayModes(inCombat)
+                ...newDisplayBar
             });
         }
     }
@@ -82,7 +31,8 @@ Hooks.on('deleteCombat', combat => {
         const combatants = Array.from(combat.data.combatants);
         for(var i = 0; i < combatants.length; i++) {
             const combatant = combatants[i];
-            const newDisplayBars = translateCustomDisplayModes(outOfCombat, combatant.token.data.flags["combat-hp-display"]);
+            const combatantDisplayMode = getDisplayMode(combatant.token.data.disposition);
+            const newDisplayBars = translateCustomDisplayModes(outOfCombat[combatantDisplayMode], combatant.token.data.flags["combat-hp-display"]);
             combatant.token.update({displayBars: newDisplayBars});
         }
     }
