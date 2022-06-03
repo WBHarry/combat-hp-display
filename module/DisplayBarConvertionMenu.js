@@ -1,10 +1,21 @@
 import { useTemplatesPath, hpDisplayModes, translateCustomDisplayModes, getDisplayMode } from '../scripts/helpers.js';
 
-export default class CombatHpDisplayMenu extends FormApplication {
+export default class DisplayBarConvertionMenu extends FormApplication {
     constructor() {
-        super({}, {title: 'Actor Converter'});
+        super({}, {title: game.i18n.localize('combat-hp-display.actorConverter.title')});
 
-        this.settings = game.settings.get('combat-hp-display', 'convert-settings');
+        this.settings = {
+            from: {
+                friendly: 60,
+                neutral: 60,
+                hostile: 60,
+            },
+            to: {
+                friendly: 30,
+                neutral: 30,
+                hostile: 30,
+            },
+        }
         this.dispositions = {
             friendly: false,
             neutral: false,
@@ -16,9 +27,12 @@ export default class CombatHpDisplayMenu extends FormApplication {
       const defaults = super.defaultOptions;
       const overrides = {
         height: 'auto',
+        width: 400,
         id: 'combat-hp-display',
         template: useTemplatesPath('convertMenu.hbs'),
         width: 'auto',
+        closeOnSubmit: false,
+        submitOnChange: true,
         classes: ["combat-hp-display", "converter-menu"],
       };
       
@@ -30,22 +44,27 @@ export default class CombatHpDisplayMenu extends FormApplication {
     getData() {
         return {
             ...this.settings,
-            optionsFrom: [
-                { value: 60, name: 'All Display Types' },
-                ,...hpDisplayModes
+            displayChoisesFrom: [
+                ...hpDisplayModes,
+                {value: 60, name: 'All Display Types'},
             ],
-            optionsTo: hpDisplayModes,
+            displayChoisesTo: hpDisplayModes,
             dispositions: this.dispositions,
             convertDisabled: !this.dispositions.friendly && !this.dispositions.neutral && !this.dispositions.hostile,
         }
     }
 
-    async _updateObject() {}
+    async _updateObject(event, formData) {
+        Object.keys(formData).forEach(key => {
+            setProperty(this.settings, key, Number.parseInt(formData[key]));
+        });
+        this.render();
+    }
 
     activateListeners(html) {
         super.activateListeners(html);
 
-        html.find(".token-display-icon").click(event => {
+        html.find(".token-display-button").click(event => {
             const disposition = event.currentTarget.id;
             setProperty(this.dispositions, disposition, !this.dispositions[disposition]);
             this.render();
@@ -54,20 +73,12 @@ export default class CombatHpDisplayMenu extends FormApplication {
         html.find("#from").change(event => {
             const value = Number.parseInt(event.target.value);
             this.settings = { ...this.settings, from : value };
-            game.settings.set('combat-hp-display', 'convert-settings', {
-                ...this.settings,
-                from: value
-            });
         });
 
         
         html.find("#to").change(event => {
             const value = Number.parseInt(event.target.value);
             this.settings = { ...this.settings, to: value };
-            game.settings.set('combat-hp-display', 'convert-settings', {
-                ...this.settings,
-                to: value
-            });
         });
 
         html.find("#convert-all").click(async (event) => {
@@ -84,11 +95,11 @@ export default class CombatHpDisplayMenu extends FormApplication {
     async convertDisplayBars(event, actors){
         event.stopPropagation();
         event.preventDefault();
-        const from = translateCustomDisplayModes(this.settings.from);
-        const to = translateCustomDisplayModes(this.settings.to);
         for(var i = 0; i < actors.length; i++){
             const actor = actors[i];
             const disposition = getDisplayMode(actor.data.token.disposition);
+            const from = translateCustomDisplayModes(this.settings.from, disposition);
+            const to = translateCustomDisplayModes(this.settings.to, disposition);
             if(this.dispositions[disposition]){
                 if(from === 60 || actor.data.token.displayBars === from){
                     await Actor.updateDocuments([{_id: actor.id, ['token.displayBars']: to}]);

@@ -1,9 +1,8 @@
 {
     "combat-hp-display": {
         "actorConverter": {
-            "label": "Actor Displaybar Converter",
-            "menuButton": "Displaybar Convert Setup",
-            "description": "Select token dispositions that will be effected.",
+            "label": "",
+            "title": "Display Bar Convertion Utility",
             "friendlyTokens": "Friendly Tokens",
             "neutralTokens": "Neutral Tokens",
             "hostileTokens": "Hostile Tokens",
@@ -14,8 +13,8 @@
             "disabledTooltip": "Select at least one token disposition"
         },
         "hpDisplaySettings": {
-            "label": "Resource Bars",
-            "menuButton": "Settings",
+            "label": "",
+            "title": "Display Bar Settings",
             "outOfCombat": "Out Of Combat",
             "inCombat": "In Combat",
             "friendlyTokens": "Friendly Token Settings",

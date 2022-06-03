@@ -1,11 +1,16 @@
 import { translateCustomDisplayModes, useTemplatesPath, getDisplayMode } from './scripts/helpers.js';
-import { registerGameSettings } from './scripts/setup.js';
+import { registerGameSettings, migrateDataStructures } from './scripts/setup.js';
 
 Hooks.once('init', function() {
     registerGameSettings();
     loadTemplates([
         useTemplatesPath('partials/tokenDisplayValues.hbs'),
+        useTemplatesPath('partials/convertDisplayvalue.hbs'),
     ]);
+});
+
+Hooks.once('ready', function() {
+    migrateDataStructures();
 });
 
 Hooks.on('updateCombat', async combat => {
@@ -15,8 +20,8 @@ Hooks.on('updateCombat', async combat => {
         for(var i = 0; i < combatants.length; i++) {
             const combatant = combatants[i];
             const combatantDisplayMode = getDisplayMode(combatant.token.data.disposition);
-            const displayBarValue = translateCustomDisplayModes(inCombat[combatantDisplayMode]);
-            const newDisplayBar = displayBarValue ? { displayBars: displayBarValue } : {};
+            const displayBarValue = translateCustomDisplayModes(inCombat, combatantDisplayMode);
+            const newDisplayBar = displayBarValue !== undefined ? { displayBars: displayBarValue } : {};
             await combatant.token.update({
                 "flags.combat-hp-display": combatant.token.data.displayBars,
                 ...newDisplayBar
@@ -32,7 +37,7 @@ Hooks.on('deleteCombat', combat => {
         for(var i = 0; i < combatants.length; i++) {
             const combatant = combatants[i];
             const combatantDisplayMode = getDisplayMode(combatant.token.data.disposition);
-            const newDisplayBars = translateCustomDisplayModes(outOfCombat[combatantDisplayMode], combatant.token.data.flags["combat-hp-display"]);
+            const newDisplayBars = translateCustomDisplayModes(outOfCombat, combatantDisplayMode, combatant.token.data.flags["combat-hp-display"]);
             combatant.token.update({displayBars: newDisplayBars});
         }
     }

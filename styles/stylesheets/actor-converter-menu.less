@@ -1,24 +1,41 @@
 .combat-hp-display {
     &.converter-menu {
-        form > header {
-            margin-bottom: 8px;
-            text-align: center;
+        .token-display-button {
+            height: 27px;
+            width: 27px;
+            flex: 0;
+            margin-right: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &#friendly:hover {
+                text-shadow: 0px 0px 2px green;
+                box-shadow: none;
+            }
+            &#neutral:hover {
+                text-shadow: 0px 0px 2px gold;
+                box-shadow: none;
+            }
+            &#hostile:hover {
+                text-shadow: 0px 0px 2px red;
+                box-shadow: none;
+            }
         }
         .token-display-icon { 
-            font-size: 24px;
-            cursor: pointer;
+            font-size: 22px;
+            margin-right: 0px;
             &.friendly {
-                &.selected, &:hover {
+                &.selected {
                     text-shadow: 0px 0px 2px green;
                 }
             }
             &.neutral {
-                &.selected, &:hover {
+                &.selected {
                     text-shadow: 0px 0px 2px gold;
                 }
             }
             &.hostile {
-                &.selected, &:hover {
+                &.selected {
                     text-shadow: 0px 0px 2px red;
                 }
             }

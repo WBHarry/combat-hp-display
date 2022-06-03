@@ -1,0 +1,17 @@
+ <div class="flex-end">
+    <div class="flex1 flexcol">
+        <div class="flexrow">
+            <button class="token-display-button" id="{{this.type}}">
+                <i class="{{#if (eq this.type "friendly")}}far fa-grin-beam {{else}}{{#if (eq this.type "neutral")}}far fa-meh{{else}}far fa-angry{{/if}}{{/if}}
+                    token-display-icon flex0 {{this.type}} {{#if (lookup this.dispositions this.type)}}selected{{/if}}" title="{{localize this.title}}">
+                </i>
+            </button>
+            <select name="from.{{this.type}}" {{#unless (lookup this.dispositions this.type)}}disabled{{/unless}}>
+                {{selectOptions this.displayChoisesFrom selected=this.outOfCombatSelected nameAttr="value" labelAttr="name"}}
+            </select>
+            <select name="to.{{this.type}}" {{#unless (lookup this.dispositions this.type)}}disabled{{/unless}}>
+                {{selectOptions this.displayChoisesTo selected=this.combatSelected nameAttr="value" labelAttr="name"}}
+            </select>
+        </div>
+    </div>
+</div>

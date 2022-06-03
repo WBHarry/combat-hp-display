@@ -1,19 +1,17 @@
 import { hpDisplayModes, useTemplatesPath } from '../scripts/helpers.js';
 
-export default class ResourceDisplayMenu extends FormApplication {
+export default class DisplayBarSettingsMenu extends FormApplication {
     constructor() {
-        super({}, {title: 'HP Display Menu'});
+        super({}, {title: game.i18n.localize('combat-hp-display.hpDisplaySettings.title')});
         this.displaySettings = {
             outOfCombat: game.settings.get('combat-hp-display', 'out-of-combat-display'),
             combat: game.settings.get('combat-hp-display', 'combat-display'),
         };
 
-        const displayChoises = hpDisplayModes.reduce((choices, option) => ({
-            ...choices,
-            [option.value]: option.name
-        }), {0: "Precombat Value"});;
-
-        this.displayChoises = displayChoises;
+        this.displayChoises = [
+            { name: "Precombat Value", value: 0, },
+            ...hpDisplayModes
+        ];
     }
 
     static get defaultOptions() {
@@ -37,7 +35,8 @@ export default class ResourceDisplayMenu extends FormApplication {
         return {
             outOfCombat: this.displaySettings.outOfCombat,
             combat: this.displaySettings.combat,
-            displayChoises: this.displayChoises,
+            displayChoisesFrom: this.displayChoises,
+            displayChoisesTo: this.displayChoises,
         }
     }
 

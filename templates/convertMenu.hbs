@@ -1,32 +1,27 @@
  <form class={{cssClass}} autocomplete="off" onsubmit="event.preventDefault();">
-    <header>
-        <label>{{localize "combat-hp-display.actorConverter.description"}}</label>
-        <div class="flexrow" style="justify-content: space-evenly;">
-            <i class="far fa-grin-beam token-display-icon friendly flex0 {{#if dispositions.friendly}}selected{{/if}}" 
-                id="friendly" title="{{localize "combat-hp-display.actorConverter.friendlyTokens"}}"></i>
-            <i class="far fa-meh token-display-icon neutral flex0 {{#if dispositions.neutral}}selected{{/if}}" 
-                id="neutral" title="{{localize "combat-hp-display.actorConverter.neutralTokens"}}"></i>
-            <i class="far fa-angry token-display-icon hostile flex0 {{#if dispositions.hostile}}selected{{/if}}" 
-                id="hostile" title="{{localize "combat-hp-display.actorConverter.hostileTokens"}}"></i>
-        </div>
-    </header>
-    <div class="flexrow">
-        <div class="convert-col">
-            <label><strong>{{localize "combat-hp-display.actorConverter.from"}}</strong></label>
-            <select name="from" id="from">
-                {{#each optionsFrom}}
-                    <option value={{this.value}} {{#if (eq this.value ../from)}}selected{{/if}}>{{this.name}}</option>
-                {{/each}}
-            </select>
-        </div>
-        <div class="convert-col">
-            <label><strong>{{localize "combat-hp-display.actorConverter.to"}}</strong></label>
-            <select name="to" id="to">
-                {{#each optionsTo}}
-                    <option value={{this.value}} {{#if (eq this.value ../to)}}selected{{/if}}>{{this.name}}</option>
-                {{/each}}
-            </select>
-        </div>
+    <div class="flexrow display-settings-titles">
+        <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.hpDisplaySettings.outOfCombat"}}</strong></label>
+        <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.hpDisplaySettings.inCombat"}}</strong></label>
+    </div>
+    <div class="flexcol">
+        {{> "modules/combat-hp-display/templates/partials/convertDisplayvalue.hbs" 
+            type="friendly" 
+            title="combat-hp-display.hpDisplaySettings.friendlyTokens"
+            outOfCombatSelected=from.friendly
+            combatSelected=to.friendly
+        }}
+        {{> "modules/combat-hp-display/templates/partials/convertDisplayvalue.hbs" 
+            type="neutral" 
+            title="combat-hp-display.hpDisplaySettings.neutralTokens"
+            outOfCombatSelected=from.neutral
+            combatSelected=to.neutral   
+        }}
+        {{> "modules/combat-hp-display/templates/partials/convertDisplayvalue.hbs" 
+            type="hostile" 
+            title="combat-hp-display.hpDisplaySettings.hostileTokens"
+            outOfCombatSelected=from.hostile
+            combatSelected=to.hostile 
+        }}
     </div>
     <footer>
         <button id="convert-all" class="menu-element" {{#if this.convertDisabled}}disabled title="{{localize "combat-hp-display.actorConverter.disabledTooltip"}}"{{/if}}>

@@ -36,7 +36,12 @@ export const getDisplayMode = (disposition) => {
     }
 };
 
-export const translateCustomDisplayModes = (customDisplayMode, flag) => {
+export const translateCustomDisplayModes = (value, disposition, flag) => {
+    const customDisplayMode = value[disposition];
+    if(customDisplayMode === 0 && !flag){
+        return undefined;
+    }
+    
     return customDisplayMode === 0 && flag ? flag : customDisplayMode === 1 ? 0 : customDisplayMode; 
 };
 

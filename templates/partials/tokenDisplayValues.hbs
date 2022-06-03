@@ -1,15 +1,14 @@
  <div class="flex-end">
     <div class="flex1 flexcol">
-        {{!-- <label><strong>{{localize this.label}}</strong></label> --}}
-        <div class="flexrow">
+        <div class="flex-center">
             {{#if (eq this.type 'friendly')}}<i class="far fa-grin-beam token-display-icon flex0" title="{{localize "combat-hp-display.hpDisplaySettings.friendlyTokens"}}"></i>{{/if}}
             {{#if (eq this.type 'neutral')}}<i class="far fa-meh token-display-icon flex0" title="{{localize "combat-hp-display.hpDisplaySettings.neutralTokens"}}"></i>{{/if}}
             {{#if (eq this.type 'hostile')}}<i class="far fa-angry token-display-icon flex0" title="{{localize "combat-hp-display.hpDisplaySettings.hostileTokens"}}"></i>{{/if}}
-            <select name="outOfCombat.{{this.type}}">
-                {{selectOptions this.displayChoises selected=outOfCombatSelected}}
+            <select name="outOfCombat.{{this.type}}" class="flex1">
+                {{selectOptions this.displayChoisesFrom selected=outOfCombatSelected nameAttr="value" labelAttr="name"}}
             </select>
-            <select name="combat.{{this.type}}">
-                {{selectOptions this.displayChoises selected=combatSelected}}
+            <select name="combat.{{this.type}}" class="flex1">
+                {{selectOptions this.displayChoisesTo selected=combatSelected nameAttr="value" labelAttr="name"}}
             </select>
         </div>
     </div>

@@ -1,35 +1,23 @@
-import ActorConverterMenu from '../module/ActorConverterMenu.js';
-import ResourceDisplayMenu from '../module/ResourceDisplayMenu.js';
+import DisplayBarConvertionMenu from '../module/DisplayBarConvertionMenu.js';
+import DisplayBarSettingsMenu from '../module/DisplayBarSettingsMenu.js';
 
 export const registerGameSettings = () => {
-    game.settings.registerMenu("combat-hp-display", "actor-converter", {
-        name: game.i18n.localize('combat-hp-display.actorConverter.label'),
-        label: game.i18n.localize('combat-hp-display.actorConverter.menuButton'),
-        hint: "",
-        icon: "fas fa-solid fa-shapes",
-        type: ActorConverterMenu,
-        restricted: true
-    });
-
     game.settings.registerMenu("combat-hp-display", "hp-display-settings", {
         name: game.i18n.localize('combat-hp-display.hpDisplaySettings.label'),
-        label: game.i18n.localize('combat-hp-display.hpDisplaySettings.menuButton'),
+        label: game.i18n.localize('combat-hp-display.hpDisplaySettings.title'),
         hint: "",
-        icon: "fas fa-solid fa-shapes",
-        type: ResourceDisplayMenu,
+        icon: "fas fa-cog",
+        type: DisplayBarSettingsMenu,
         restricted: true
     });
 
-    game.settings.register('combat-hp-display', 'convert-settings', {
-        name: 'Convert Settings',
-        hint: 'Convert Settings',
-        scope: 'world',
-        default: {
-            from: 50,
-            to: 30,
-        },
-        config: false,
-        type: Object,
+    game.settings.registerMenu("combat-hp-display", "actor-converter", {
+        name: game.i18n.localize('combat-hp-display.actorConverter.label'),
+        label: game.i18n.localize('combat-hp-display.actorConverter.title'),
+        hint: "",
+        icon: "fas fa-exchange-alt",
+        type: DisplayBarConvertionMenu,
+        restricted: true
     });
 
     game.settings.register("combat-hp-display", "out-of-combat-display", {
@@ -57,4 +45,24 @@ export const registerGameSettings = () => {
             hostile: 50,
         },
     });
+};
+
+export const migrateDataStructures = () => {
+    const outOfCombat = game.settings.get('combat-hp-display', 'out-of-combat-display');
+    if(typeof outOfCombat !== 'object'){
+        game.settings.set('combat-hp-display', 'out-of-combat-display', {
+            friendly: outOfCombat,
+            neutral: outOfCombat,
+            hostile: outOfCombat,
+        });
+    }
+
+    const inCombat = game.settings.get('combat-hp-display', 'combat-display');
+    if(typeof inCombat !== 'object'){
+        game.settings.set('combat-hp-display', 'combat-display', {
+            friendly: inCombat,
+            neutral: inCombat,
+            hostile: inCombat,
+        });
+    }
 };
