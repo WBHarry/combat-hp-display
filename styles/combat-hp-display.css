@@ -1,33 +1,40 @@
-.combat-hp-display-flex {
-    display: flex;
-    align-items: flex-end;
+.combat-hp-display .flex-end {
+  display: flex;
+  align-items: flex-end;
 }
-
-.combat-hp-display-color-code-flex {
-    display: flex;
-    align-items: center;
+.combat-hp-display .convert-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-
-.convert-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.combat-hp-display footer {
+  margin-top: 8px;
 }
-
-.combat-hp-display-disabled {
-    opacity: 0.3;
+.combat-hp-display .display-settings-titles {
+  margin-left: 28px;
 }
-
-.settings-footer {
-    margin-top: 8px;
+.combat-hp-display.converter-menu form > header {
+  margin-bottom: 8px;
+  text-align: center;
 }
-
-.token-display-icon {
-    font-size: 24px;
-    margin-right: 4px;
+.combat-hp-display.converter-menu .token-display-icon {
+  font-size: 24px;
+  cursor: pointer;
 }
-
-.display-settings-titles {
-    margin-left: 28px;
+.combat-hp-display.converter-menu .token-display-icon.friendly.selected,
+.combat-hp-display.converter-menu .token-display-icon.friendly:hover {
+  text-shadow: 0px 0px 2px green;
+}
+.combat-hp-display.converter-menu .token-display-icon.neutral.selected,
+.combat-hp-display.converter-menu .token-display-icon.neutral:hover {
+  text-shadow: 0px 0px 2px gold;
+}
+.combat-hp-display.converter-menu .token-display-icon.hostile.selected,
+.combat-hp-display.converter-menu .token-display-icon.hostile:hover {
+  text-shadow: 0px 0px 2px red;
+}
+.combat-hp-display.settings-menu .token-display-icon {
+  font-size: 24px;
+  margin-right: 4px;
 }

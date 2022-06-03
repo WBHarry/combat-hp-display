@@ -1,24 +1,39 @@
- <form autocomplete="off" onsubmit="event.preventDefault();">
-    <div>
-        <div class="flexrow">
-            <div class="convert-col">
-                <label>{{localize "combat-hp-display.actorConverter.from"}}</label>
-                <select name="from" id="from">
-                    {{#each optionsFrom}}
-                        <option value={{this.value}} {{#if (eq this.value ../from)}}selected{{/if}}>{{this.name}}</option>
-                    {{/each}}
-                </select>
-            </div>
-            <div class="convert-col">
-                <label>{{localize "combat-hp-display.actorConverter.to"}}</label>
-                <select name="to" id="to">
-                    {{#each optionsTo}}
-                        <option value={{this.value}} {{#if (eq this.value ../to)}}selected{{/if}}>{{this.name}}</option>
-                    {{/each}}
-                </select>
-            </div>
+ <form class={{cssClass}} autocomplete="off" onsubmit="event.preventDefault();">
+    <header>
+        <label>{{localize "combat-hp-display.actorConverter.description"}}</label>
+        <div class="flexrow" style="justify-content: space-evenly;">
+            <i class="far fa-grin-beam token-display-icon friendly flex0 {{#if dispositions.friendly}}selected{{/if}}" 
+                id="friendly" title="{{localize "combat-hp-display.actorConverter.friendlyTokens"}}"></i>
+            <i class="far fa-meh token-display-icon neutral flex0 {{#if dispositions.neutral}}selected{{/if}}" 
+                id="neutral" title="{{localize "combat-hp-display.actorConverter.neutralTokens"}}"></i>
+            <i class="far fa-angry token-display-icon hostile flex0 {{#if dispositions.hostile}}selected{{/if}}" 
+                id="hostile" title="{{localize "combat-hp-display.actorConverter.hostileTokens"}}"></i>
         </div>
-        <button id="convert-all" class="menu-element">{{localize "combat-hp-display.actorConverter.convertAll"}}</button>
-        <button id="convert-map" class="menu-element">{{localize "combat-hp-display.actorConverter.convertMap"}}</button>
+    </header>
+    <div class="flexrow">
+        <div class="convert-col">
+            <label><strong>{{localize "combat-hp-display.actorConverter.from"}}</strong></label>
+            <select name="from" id="from">
+                {{#each optionsFrom}}
+                    <option value={{this.value}} {{#if (eq this.value ../from)}}selected{{/if}}>{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="convert-col">
+            <label><strong>{{localize "combat-hp-display.actorConverter.to"}}</strong></label>
+            <select name="to" id="to">
+                {{#each optionsTo}}
+                    <option value={{this.value}} {{#if (eq this.value ../to)}}selected{{/if}}>{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
     </div>
+    <footer>
+        <button id="convert-all" class="menu-element" {{#if this.convertDisabled}}disabled title="{{localize "combat-hp-display.actorConverter.disabledTooltip"}}"{{/if}}>
+            {{localize "combat-hp-display.actorConverter.convertAll"}}
+        </button>
+        <button id="convert-map" class="menu-element" {{#if this.convertDisabled}}disabled title="{{localize "combat-hp-display.actorConverter.disabledTooltip"}}"{{/if}}>
+            {{localize "combat-hp-display.actorConverter.convertMap"}}
+        </button>
+    </footer>
  </form>

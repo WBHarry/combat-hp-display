@@ -1,0 +1,27 @@
+.combat-hp-display {
+    &.converter-menu {
+        form > header {
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .token-display-icon { 
+            font-size: 24px;
+            cursor: pointer;
+            &.friendly {
+                &.selected, &:hover {
+                    text-shadow: 0px 0px 2px green;
+                }
+            }
+            &.neutral {
+                &.selected, &:hover {
+                    text-shadow: 0px 0px 2px gold;
+                }
+            }
+            &.hostile {
+                &.selected, &:hover {
+                    text-shadow: 0px 0px 2px red;
+                }
+            }
+        }
+    }
+}

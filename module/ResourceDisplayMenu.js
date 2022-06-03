@@ -25,6 +25,7 @@ export default class ResourceDisplayMenu extends FormApplication {
         template: useTemplatesPath('settingsMenu.hbs'),
         closeOnSubmit: false,
         submitOnChange: true,
+        classes: ["combat-hp-display", "settings-menu"],
       };
       
       const mergedOptions = foundry.utils.mergeObject(defaults, overrides);

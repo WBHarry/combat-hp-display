@@ -3,10 +3,15 @@
         "actorConverter": {
             "label": "Actor Displaybar Converter",
             "menuButton": "Displaybar Convert Setup",
+            "description": "Select token dispositions that will be effected.",
+            "friendlyTokens": "Friendly Tokens",
+            "neutralTokens": "Neutral Tokens",
+            "hostileTokens": "Hostile Tokens",
             "from": "From",
             "to": "To",
             "convertAll": "Convert All Actors",
-            "convertMap": "Convert All Actors On Map"
+            "convertMap": "Convert All Actors On Map",
+            "disabledTooltip": "Select at least one token disposition"
         },
         "hpDisplaySettings": {
             "label": "Resource Bars",
