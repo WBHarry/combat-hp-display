@@ -4,10 +4,7 @@ on:
   release:
     types: [published]
 
-permissions:
-      issues: write
-      pull-requests: write
-
+permissions: read-all|write-all
 jobs:
   build:
     runs-on: ubuntu-latest
