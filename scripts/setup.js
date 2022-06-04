@@ -49,7 +49,7 @@ export const registerGameSettings = () => {
 
 export const migrateDataStructures = () => {
     const outOfCombat = game.settings.get('combat-hp-display', 'out-of-combat-display');
-    if(typeof outOfCombat !== 'object'){
+    if(typeof outOfCombat?.valueOf() === 'number'){
         game.settings.set('combat-hp-display', 'out-of-combat-display', {
             friendly: outOfCombat,
             neutral: outOfCombat,
@@ -58,7 +58,7 @@ export const migrateDataStructures = () => {
     }
 
     const inCombat = game.settings.get('combat-hp-display', 'combat-display');
-    if(typeof inCombat !== 'object'){
+    if(typeof inCombat?.valueOf() === 'number'){
         game.settings.set('combat-hp-display', 'combat-display', {
             friendly: inCombat,
             neutral: inCombat,
