@@ -76,7 +76,7 @@ const updateDisplayMode = async (combatants) => {
             }
         }
         else if(game.user.isGM){
-            await combatant.token.update({displayBars: combatant.token.data.flags["flags.combat-hp-display"]});
+            combatant.token.update({displayBars: combatant.token.data.flags["combat-hp-display"]});
         }
     }
 }
