@@ -1,16 +1,15 @@
-import { hpDisplayModes, useTemplatesPath } from '../scripts/helpers.js';
+import { hpDisplayModes, barBrawlHpDisplayModes, useTemplatesPath } from '../scripts/combat-hp-display-helpers.js';
 
 export default class DisplayBarSettingsMenu extends FormApplication {
     constructor() {
         super({}, {title: game.i18n.localize('combat-hp-display.hpDisplaySettings.title')});
         this.displaySettings = {
-            outOfCombat: game.settings.get('combat-hp-display', 'out-of-combat-display'),
             combat: game.settings.get('combat-hp-display', 'combat-display'),
         };
-
+        
         this.displayChoises = [
             { name: "Precombat Value", value: 0, },
-            ...hpDisplayModes
+            ...(game.modules.get("barbrawl")?.active ? barBrawlHpDisplayModes : hpDisplayModes)
         ];
     }
 
@@ -18,7 +17,7 @@ export default class DisplayBarSettingsMenu extends FormApplication {
       const defaults = super.defaultOptions;
       const overrides = {
         height: 'auto',
-        width: 400,
+        width: 300,
         id: 'resource-display-menu',
         template: useTemplatesPath('settingsMenu.hbs'),
         closeOnSubmit: false,
@@ -33,7 +32,6 @@ export default class DisplayBarSettingsMenu extends FormApplication {
 
     getData() {
         return {
-            outOfCombat: this.displaySettings.outOfCombat,
             combat: this.displaySettings.combat,
             displayChoisesFrom: this.displayChoises,
             displayChoisesTo: this.displayChoises,
@@ -53,7 +51,6 @@ export default class DisplayBarSettingsMenu extends FormApplication {
         super.activateListeners(html);
 
         $(html).find('#save').click(event => {
-            game.settings.set('combat-hp-display', 'out-of-combat-display', this.displaySettings.outOfCombat);
             game.settings.set('combat-hp-display', 'combat-display', this.displaySettings.combat);
             this.close();
         });

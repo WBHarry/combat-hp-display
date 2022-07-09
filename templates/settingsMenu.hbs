@@ -1,22 +1,18 @@
  <form class={{cssClass}} autocomplete="off" onsubmit="event.preventDefault();">
     <div class="flexrow display-settings-titles">
-        <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.hpDisplaySettings.outOfCombat"}}</strong></label>
         <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.hpDisplaySettings.inCombat"}}</strong></label>
     </div>
     <div class="flexcol">
         {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
             type="friendly" 
-            outOfCombatSelected=outOfCombat.friendly
             combatSelected=combat.friendly
         }}
         {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
             type="neutral" 
-            outOfCombatSelected=outOfCombat.neutral
             combatSelected=combat.neutral   
         }}
         {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
             type="hostile" 
-            outOfCombatSelected=outOfCombat.hostile
             combatSelected=combat.hostile 
         }}
     </div>

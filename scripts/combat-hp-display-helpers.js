@@ -25,6 +25,21 @@ export const hpDisplayModes = [
     },
 ];
 
+export const barBrawlHpDisplayModes = [
+    {
+        name: 'Never Displayed',
+        value: 1,
+    },
+    {
+        name: 'Hovered By Anyone',
+        value: 30,
+    },
+    {
+        name: 'Always For Everyone',
+        value: 50,
+    },
+];
+
 export const getDisplayMode = (disposition) => {
     switch(disposition){
         case -1:

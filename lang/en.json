@@ -15,8 +15,7 @@
         "hpDisplaySettings": {
             "label": "",
             "title": "Display Bar Settings",
-            "outOfCombat": "Out Of Combat",
-            "inCombat": "In Combat",
+            "inCombat": "In Combat Display",
             "friendlyTokens": "Friendly Token Settings",
             "neutralTokens": "Neutral Token Settings",
             "hostileTokens": "Hostile Token Settings"

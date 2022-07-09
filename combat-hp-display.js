@@ -1,4 +1,4 @@
-import { useTemplatesPath } from './scripts/helpers.js';
+import { useTemplatesPath } from './scripts/combat-hp-display-helpers.js';
 import { registerGameSettings, migrateDataStructures } from './scripts/setup.js';
 import { deleteCombatUpdate, deleteCombatantUpdate, startCombatUpdate, joinCombatUpdate } from './module/DisplayBarHandler.js';
 
@@ -10,8 +10,8 @@ Hooks.once('init', function() {
     ]);
 });
 
-Hooks.once('ready', function() {
-    migrateDataStructures();
+Hooks.once('ready', async () => {
+    await migrateDataStructures();
 });
 
 Hooks.on('createCombatant', async combatant => {
@@ -22,10 +22,10 @@ Hooks.on('updateCombat', async combat => {
     await startCombatUpdate(combat);
 });
 
-Hooks.on('deleteCombat', combat => {
-    deleteCombatUpdate(combat);
+Hooks.on('deleteCombat', async combat => {
+    await deleteCombatUpdate(combat);
 });
 
-Hooks.on('deleteCombatant', combatant => {
-    deleteCombatantUpdate(combatant);
+Hooks.on('deleteCombatant', async combatant => {
+    await deleteCombatantUpdate(combatant);
 });

@@ -1,4 +1,4 @@
-import { useTemplatesPath, hpDisplayModes, translateCustomDisplayModes, getDisplayMode } from '../scripts/helpers.js';
+import { useTemplatesPath, hpDisplayModes, translateCustomDisplayModes, getDisplayMode } from '../scripts/combat-hp-display-helpers.js';
 
 export default class DisplayBarConvertionMenu extends FormApplication {
     constructor() {
