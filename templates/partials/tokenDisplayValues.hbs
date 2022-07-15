@@ -5,5 +5,5 @@
         <select name="combat.{{this.type}}.value" class="flex1">
             {{selectOptions this.displayChoisesTo selected=combatSelected nameAttr="value" labelAttr="name"}}
         </select>
-        {{#if barbrawl}}<input id="gmOnly" type="checkbox" name="combat.{{this.type}}.gmOnly" data-dtype="Boolean" {{checked gmOnly}} />{{/if}}
+        {{#if barbrawl}}<input id="gmOnly" type="checkbox" name="combat.{{this.type}}.gmOnly" data-dtype="Boolean" class="gm-row" {{checked gmOnly}} />{{/if}}
 </div>

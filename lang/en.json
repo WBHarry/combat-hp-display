@@ -16,6 +16,7 @@
             "label": "",
             "title": "Display Bar Settings",
             "inCombat": "In Combat Display",
+            "gmOnly": "GM Only",
             "friendlyTokens": "Friendly Token Settings",
             "neutralTokens": "Neutral Token Settings",
             "hostileTokens": "Hostile Token Settings"
