@@ -1,7 +1,7 @@
  <form class={{cssClass}} autocomplete="off" onsubmit="event.preventDefault();">
     <div class="flexrow display-settings-titles">
         <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.hpDisplaySettings.inCombat"}}</strong></label>
-        <label class="flex0 gm-label"><strong>{{localize "combat-hp-display.hpDisplaySettings.gmOnly"}}</strong></label>
+        {{#if barbrawlActive}}<label class="flex0 gm-label"><strong>{{localize "combat-hp-display.hpDisplaySettings.gmOnly"}}</strong></label>{{/if}}
     </div>
     <div class="flexcol">
         {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
