@@ -28,29 +28,40 @@ export const registerGameSettings = () => {
         config: false,
         type: Object,
         default: {
-            friendly: 50,
-            neutral: 50,
-            hostile: 50,
+            friendly: { value: 50, gmOnly: false },
+            neutral: { value: 50, gmOnly: false },
+            hostile: { value: 50, gmOnly: false },
         },
     });
 };
 
 export const migrateDataStructures = async () => {
-    if(typeof game.settings.get('combat-hp-display', 'combat-display')?.valueOf() === 'number'){
+    if(game.user.isGM){
+        if(typeof game.settings.get('combat-hp-display', 'combat-display')?.valueOf() === 'number'){
+            const inCombat = game.settings.get('combat-hp-display', 'combat-display');
+            await game.settings.set('combat-hp-display', 'combat-display', {
+                friendly: { value: inCombat, gmOnly: false },
+                neutral: { value: inCombat, gmOnly: false },
+                hostile: { value: inCombat, gmOnly: false },
+            });
+        }
+        
         const inCombat = game.settings.get('combat-hp-display', 'combat-display');
-        await game.settings.set('combat-hp-display', 'combat-display', {
-            friendly: inCombat,
-            neutral: inCombat,
-            hostile: inCombat,
-        });
-    }
-
-    if(game.modules.get("barbrawl")?.active){
-        const inCombat = game.settings.get('combat-hp-display', 'combat-display');
-        Object.keys(inCombat).forEach(key => {
-            const setting = inCombat[key];
-            inCombat[key] = (setting === 10 || setting === 20) ? 30 : setting === 40 ? 50 : setting;
-        });
-        await game.settings.set('combat-hp-display', 'combat-display', inCombat);
+        if(inCombat.friendly.value === undefined) {
+            await game.settings.set('combat-hp-display', 'combat-display', {
+                friendly: { value: inCombat.friendly.value ?? inCombat.friendly, gmOnly: false },
+                neutral: { value: inCombat.neutral.value ?? inCombat.neutral, gmOnly: false },
+                hostile: { value: inCombat.hostile.value ?? inCombat.hostile, gmOnly: false },
+            });
+        }
+    
+        if(game.modules.get("barbrawl")?.active){
+            const inCombat = game.settings.get('combat-hp-display', 'combat-display');
+            Object.keys(inCombat).forEach(key => {
+                const setting = inCombat[key].value;
+                inCombat[key].value = (setting === 10 || setting === 20) ? 30 : setting === 40 ? 50 : setting;
+            });
+            await game.settings.set('combat-hp-display', 'combat-display', inCombat);
+        }
     }
 };

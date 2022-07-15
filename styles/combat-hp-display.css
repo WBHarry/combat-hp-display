@@ -18,6 +18,9 @@
 .combat-hp-display .display-settings-titles {
   margin-left: 28px;
 }
+.combat-hp-display .display-settings-titles.barbrawl {
+  margin-right: 30px;
+}
 .combat-hp-display.converter-menu .token-display-button {
   height: 27px;
   width: 27px;

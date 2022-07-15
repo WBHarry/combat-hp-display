@@ -6,10 +6,12 @@ export default class DisplayBarSettingsMenu extends FormApplication {
         this.displaySettings = {
             combat: game.settings.get('combat-hp-display', 'combat-display'),
         };
+
+        this.barbrawlActive = game.modules.get("barbrawl")?.active;
         
         this.displayChoises = [
             { name: "Precombat Value", value: 0, },
-            ...(game.modules.get("barbrawl")?.active ? barBrawlHpDisplayModes : hpDisplayModes)
+            ...(this.barbrawlActive ? barBrawlHpDisplayModes : hpDisplayModes)
         ];
     }
 
@@ -35,6 +37,7 @@ export default class DisplayBarSettingsMenu extends FormApplication {
             combat: this.displaySettings.combat,
             displayChoisesFrom: this.displayChoises,
             displayChoisesTo: this.displayChoises,
+            barbrawlActive: this.barbrawlActive,
         }
     }
 

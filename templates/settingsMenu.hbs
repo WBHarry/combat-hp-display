@@ -1,19 +1,25 @@
  <form class={{cssClass}} autocomplete="off" onsubmit="event.preventDefault();">
-    <div class="flexrow display-settings-titles">
+    <div class="flexrow display-settings-titles {{#if barbrawlActive}}barbrawl{{/if}}">
         <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.hpDisplaySettings.inCombat"}}</strong></label>
     </div>
     <div class="flexcol">
         {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
             type="friendly" 
-            combatSelected=combat.friendly
+            combatSelected=combat.friendly.value
+            gmOnly=combat.friendly.gmOnly
+            barbrawl=barbrawlActive
         }}
         {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
             type="neutral" 
-            combatSelected=combat.neutral   
+            combatSelected=combat.neutral.value   
+            gmOnly=combat.neutral.gmOnly
+            barbrawl=barbrawlActive
         }}
         {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
             type="hostile" 
-            combatSelected=combat.hostile 
+            combatSelected=combat.hostile.value
+            gmOnly=combat.hostile.gmOnly
+            barbrawl=barbrawlActive
         }}
     </div>
     <footer class="sheet-footer flexrow">

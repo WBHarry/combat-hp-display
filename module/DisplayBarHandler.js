@@ -25,14 +25,16 @@ const diplayBarUpdate = async (combatant, inCombat) => {
     const combatantDisplayMode = getDisplayMode(combatant.token.data.disposition);
     const displayBarValue = translateCustomDisplayModes(inCombat, combatantDisplayMode);
     if(game.modules.get("barbrawl")?.active){
-        const origResourceBars = combatant.token.data.flags.barbrawl?.resourceBars;
-        const resourceBars = deepClone(origResourceBars);
+        const gmOnly = inCombat[combatantDisplayMode].gmOnly;
+        const resourceBars = combatant.token.data.flags.barbrawl?.resourceBars;
+        const origResourceBars = cloneResourceBars(resourceBars);
         if(resourceBars){
             Object.keys(resourceBars).forEach(key => {
                 resourceBars[key] = {
                     ...resourceBars[key],
-                    otherVisibility: displayBarValue,
-                    ownerVisibility: -1,
+                    otherVisibility: !gmOnly ? displayBarValue: undefined,
+                    ownerVisibility: !gmOnly ? -1 : undefined,
+                    gmVisibility: gmOnly ? displayBarValue : undefined,
                 };
             });
 
@@ -80,3 +82,12 @@ const updateDisplayMode = async (combatants) => {
         }
     }
 }
+
+const cloneResourceBars = (resourceBars) => {
+    const cloned = deepClone(resourceBars);
+    Object.keys(cloned).forEach(key => {
+        const bar = cloned[key];
+        bar.gmVisibility = bar.gmVisibility === undefined ? -1 : bar.gmVisibility;
+    });
+    return cloned;
+};
