@@ -2,7 +2,7 @@ import { translateCustomDisplayModes, getDisplayMode } from '../scripts/combat-h
 
 export const startCombatUpdate = async (combat) => {
     if(game.user.isGM && combat.previous.round === 0 && combat.current.round === 1){
-        const combatants = Array.from(combat.data.combatants);
+        const combatants = Array.from(combat.combatants);
         await combatUpdate(combatants);
     }
 }
@@ -22,11 +22,11 @@ export const combatUpdate = async (combatants) => {
 };
 
 const diplayBarUpdate = async (combatant, inCombat) => {
-    const combatantDisplayMode = getDisplayMode(combatant.token.data.disposition);
+    const combatantDisplayMode = getDisplayMode(combatant.token.disposition);
     const displayBarValue = translateCustomDisplayModes(inCombat, combatantDisplayMode);
     if(game.modules.get("barbrawl")?.active){
         const gmOnly = inCombat[combatantDisplayMode].gmOnly;
-        const resourceBars = combatant.token.data.flags.barbrawl?.resourceBars;
+        const resourceBars = combatant.token.flags.barbrawl?.resourceBars;
         const origResourceBars = cloneResourceBars(resourceBars);
         if(resourceBars){
             Object.keys(resourceBars).forEach(key => {
@@ -47,14 +47,14 @@ const diplayBarUpdate = async (combatant, inCombat) => {
     else {
         const displayBarSettings = displayBarValue !== undefined ? { displayBars: displayBarValue } : {};
         await combatant.token.update({
-            "flags.combat-hp-display": combatant.token.data.displayBars,
+            "flags.combat-hp-display": combatant.token.displayBars,
             ...displayBarSettings
         });
     }
 };
 
 export const deleteCombatUpdate = async (combat) => {
-    const combatants = Array.from(combat.data.combatants);
+    const combatants = Array.from(combat.combatants);
     await updateDisplayMode(combatants);
 }
 
@@ -70,7 +70,7 @@ const updateDisplayMode = async (combatants) => {
         if(game.modules.get("barbrawl")?.active){
             if(game.user.isGM){
                 await combatant.token.update({
-                    "flags.barbrawl.resourceBars": combatant.token.data.flags["combat-hp-display-bar-brawl-bars"],
+                    "flags.barbrawl.resourceBars": combatant.token.flags["combat-hp-display-bar-brawl-bars"],
                 });
             }
             else {
@@ -78,7 +78,7 @@ const updateDisplayMode = async (combatants) => {
             }
         }
         else if(game.user.isGM){
-            combatant.token.update({displayBars: combatant.token.data.flags["combat-hp-display"]});
+            combatant.token.update({displayBars: combatant.token.flags["combat-hp-display"]});
         }
     }
 }
