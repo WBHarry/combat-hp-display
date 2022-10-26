@@ -4,19 +4,19 @@
         <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.actorConverter.to"}}</strong></label>
     </div>
     <div class="flexcol">
-        {{> "modules/combat-hp-display/templates/partials/convertDisplayvalue.hbs" 
+        {{> "modules/combat-hp-display/templates/partials/convertDisplayValue.hbs" 
             type="friendly" 
             title="combat-hp-display.hpDisplaySettings.friendlyTokens"
             outOfCombatSelected=from.friendly
             combatSelected=to.friendly
         }}
-        {{> "modules/combat-hp-display/templates/partials/convertDisplayvalue.hbs" 
+        {{> "modules/combat-hp-display/templates/partials/convertDisplayValue.hbs" 
             type="neutral" 
             title="combat-hp-display.hpDisplaySettings.neutralTokens"
             outOfCombatSelected=from.neutral
             combatSelected=to.neutral   
         }}
-        {{> "modules/combat-hp-display/templates/partials/convertDisplayvalue.hbs" 
+        {{> "modules/combat-hp-display/templates/partials/convertDisplayValue.hbs" 
             type="hostile" 
             title="combat-hp-display.hpDisplaySettings.hostileTokens"
             outOfCombatSelected=from.hostile

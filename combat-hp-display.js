@@ -6,7 +6,7 @@ Hooks.once('init', function() {
     registerGameSettings();
     loadTemplates([
         useTemplatesPath('partials/tokenDisplayValues.hbs'),
-        useTemplatesPath('partials/convertDisplayvalue.hbs'),
+        useTemplatesPath('partials/convertDisplayValue.hbs'),
     ]);
 });
 
