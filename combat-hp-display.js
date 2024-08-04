@@ -1,6 +1,6 @@
 import { useTemplatesPath } from './scripts/combat-hp-display-helpers.js';
 import { registerGameSettings, migrateDataStructures } from './scripts/setup.js';
-import { deleteCombatUpdate, deleteCombatantUpdate, startCombatUpdate, joinCombatUpdate } from './module/DisplayBarHandler.js';
+import { deleteCombatUpdate, startCombatUpdate, joinCombatUpdate } from './module/DisplayBarHandler.js';
 
 Hooks.once('init', function() {
     registerGameSettings();
@@ -24,8 +24,4 @@ Hooks.on('updateCombat', async combat => {
 
 Hooks.on('deleteCombat', async combat => {
     await deleteCombatUpdate(combat);
-});
-
-Hooks.on('deleteCombatant', async combatant => {
-    await deleteCombatantUpdate(combatant);
 });

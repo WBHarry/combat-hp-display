@@ -10,7 +10,7 @@
             "to": "To",
             "convertAll": "Convert All Actors",
             "convertMap": "Convert All Actors On Map",
-            "disabledTooltip": "Select at least one token disposition"
+                "disabledTooltip": "Select at least one token disposition"
         },
         "hpDisplaySettings": {
             "label": "",
@@ -20,6 +20,9 @@
             "friendlyTokens": "Friendly Token Settings",
             "neutralTokens": "Neutral Token Settings",
             "hostileTokens": "Hostile Token Settings"
+        },
+        "gridSettings": {
+            "title": "Grid Settings"
         }
     }
 }

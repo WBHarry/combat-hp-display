@@ -1,5 +1,6 @@
 import DisplayBarConvertionMenu from '../module/DisplayBarConvertionMenu.js';
 import DisplayBarSettingsMenu from '../module/DisplayBarSettingsMenu.js';
+import GridSettingsMenu from '../module/GridSettingsMenu.js';
 
 export const registerGameSettings = () => {
     game.settings.registerMenu("combat-hp-display", "hp-display-settings", {
@@ -10,6 +11,16 @@ export const registerGameSettings = () => {
         type: DisplayBarSettingsMenu,
         restricted: true
     });
+
+    game.settings.registerMenu("combat-hp-display", "grid-settings", {
+        name: game.i18n.localize('combat-hp-display.hpDisplaySettings.label'),
+        label: game.i18n.localize('combat-hp-display.hpDisplaySettings.title'),
+        hint: "",
+        icon: "fa-solid fa-border-all",
+        type: GridSettingsMenu,
+        restricted: true
+    });
+    
     if(!game.modules.get("barbrawl")?.active){
         game.settings.registerMenu("combat-hp-display", "actor-converter", {
             name: game.i18n.localize('combat-hp-display.actorConverter.label'),
@@ -31,6 +42,18 @@ export const registerGameSettings = () => {
             friendly: { value: 50, gmOnly: false },
             neutral: { value: 50, gmOnly: false },
             hostile: { value: 50, gmOnly: false },
+        },
+    });
+
+    game.settings.register("combat-hp-display", "grid-display", {
+        name: "Combat Grid Display",
+        hint: "Scene grid behavior used when in combat",
+        scope: "world",
+        config: false,
+        type: Object,
+        default: {
+            enabled: false,
+            opacity: 0.2,
         },
     });
 };

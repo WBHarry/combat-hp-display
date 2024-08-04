@@ -7,10 +7,10 @@
                 </i>
             </button>
             <select name="from.{{this.type}}" {{#unless (lookup this.dispositions this.type)}}disabled{{/unless}}>
-                {{selectOptions this.displayChoisesFrom selected=this.outOfCombatSelected nameAttr="value" labelAttr="name"}}
+                {{selectOptions this.displayChoisesFrom selected=this.outOfCombatSelected valueAttr="value" labelAttr="name"}}
             </select>
             <select name="to.{{this.type}}" {{#unless (lookup this.dispositions this.type)}}disabled{{/unless}}>
-                {{selectOptions this.displayChoisesTo selected=this.combatSelected nameAttr="value" labelAttr="name"}}
+                {{selectOptions this.displayChoisesTo selected=this.combatSelected valueAttr="value" labelAttr="name"}}
             </select>
         </div>
     </div>
