@@ -13,7 +13,7 @@ export default class GridSettingsMenu extends FormApplication {
       const defaults = super.defaultOptions;
       const overrides = {
         height: 'auto',
-        width: 300,
+        width: 400,
         id: 'resource-display-menu',
         template: useTemplatesPath('gridMenu.hbs'),
         closeOnSubmit: false,
@@ -27,8 +27,26 @@ export default class GridSettingsMenu extends FormApplication {
     }
 
     getData() {
+        const gridTypes = Object.keys(foundry.CONST.GRID_TYPES).map(key => {
+            const value = foundry.CONST.GRID_TYPES[key];
+            switch(value) {
+                case 0:
+                    return { value, name: game.i18n.localize('SCENES.GridGridless') };
+                case 1:
+                    return { value, name: game.i18n.localize('SCENES.GridSquare') };
+                case 2:
+                    return { value, name: game.i18n.localize('SCENES.GridHexOddR') };
+                case 3:
+                    return { value, name: game.i18n.localize('SCENES.GridHexEvenR') };
+                case 4:
+                    return { value, name: game.i18n.localize('SCENES.GridHexOddQ') };
+                case 5:
+                    return { value, name: game.i18n.localize('SCENES.GridHexEvenQ') };
+            }
+        });
         return {
             grid: this.gridSettings,
+            gridTypes: gridTypes,
         }
     }
 

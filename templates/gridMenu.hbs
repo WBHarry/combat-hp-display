@@ -1,6 +1,24 @@
  <form class={{cssClass}} autocomplete="off" onsubmit="event.preventDefault();">
     <div class="flexcol">
         <div class="form-group">
+            <label><strong>{{localize "Color Override"}}</strong></label>
+            <div class="form-fields">
+                <label>{{localize "Enabled"}}</label>
+                <input type="checkbox" name="grid.colorOverride.enabled" {{checked grid.colorOverride.enabled}} />
+                <color-picker name="grid.colorOverride.color" value="{{grid.colorOverride.color}}" placeholder="#000000"></color-picker>
+            </div>
+        </div>
+        <div class="form-group">
+            <label><strong>{{localize "Grid Override"}}</strong></label>
+            <div class="form-fields">
+                <label>{{localize "Enabled"}}</label>
+                <input type="checkbox" name="grid.gridOverride.enabled" {{checked grid.gridOverride.enabled}} />
+                <select name="grid.gridOverride.type" data-dtype="Number">
+                    {{selectOptions this.gridTypes selected=grid.gridOverride.type valueAttr="value" labelAttr="name" localize=true}}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
             <label><strong>{{localize "Enabled"}}</strong></label>
             <div class="form-fields">
                 <input type="checkbox" name="grid.enabled" {{checked grid.enabled}} />

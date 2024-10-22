@@ -51,9 +51,24 @@ export const registerGameSettings = () => {
         scope: "world",
         config: false,
         type: Object,
+        onChange: value => {
+            for(var scene of game.scenes){
+                scene.update({ 
+                    grid: {
+                        color: value.colorOverride.enabled ? Color.from(value.colorOverride.color) : Color.from('#000000'),
+                        type: value.gridOverride.enabled ? value.gridOverride.type : scene.grid.type,
+                    }
+                    
+                }, { diff: false });
+            }
+        },
         default: {
             enabled: false,
             opacity: 0.2,
+            colorOverride: {
+                enabled: false,
+                color: '#000000'
+            }
         },
     });
 };
@@ -76,6 +91,14 @@ export const migrateDataStructures = async () => {
                 neutral: { value: inCombat.neutral.value ?? inCombat.neutral, gmOnly: false },
                 hostile: { value: inCombat.hostile.value ?? inCombat.hostile, gmOnly: false },
             });
+        }
+
+        const gridDisplay = game.settings.get('combat-hp-display', 'grid-display');
+        if(!gridDisplay.colorOverride) {
+            await game.settings.set('combat-hp-display', 'grid-display', { ...gridDisplay, colorOverride: { enabled: false, color: '#000000' } });
+        }
+        if(!gridDisplay.gridOverride) {
+            await game.settings.set('combat-hp-display', 'grid-display', { ...gridDisplay, gridOverride: { enabled: false, type: 1 } });
         }
     
         if(game.modules.get("barbrawl")?.active){

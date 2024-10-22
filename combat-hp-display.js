@@ -25,3 +25,15 @@ Hooks.on('updateCombat', async combat => {
 Hooks.on('deleteCombat', async combat => {
     await deleteCombatUpdate(combat);
 });
+
+Hooks.on('preCreateScene', async (scene) => {
+    const { colorOverride, gridOverride } = game.settings.get('combat-hp-display', 'grid-display');
+    if(colorOverride.enabled || gridOverride){
+        scene.updateSource({ 
+            grid: {
+                color: colorOverride.enabled ? Color.from(colorOverride.color) : scene.grid.color,
+                type: gridOverride.enabled ? gridOverride.type : scene.grid.type,
+            } 
+        }, { diff: false });
+    }
+});
