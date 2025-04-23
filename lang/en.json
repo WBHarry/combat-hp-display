@@ -22,7 +22,8 @@
             "hostileTokens": "Hostile Token Settings"
         },
         "gridSettings": {
-            "title": "Grid Settings"
+            "title": "Grid Settings",
+            "label": ""
         }
     }
 }

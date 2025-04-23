@@ -13,8 +13,8 @@ export const registerGameSettings = () => {
     });
 
     game.settings.registerMenu("combat-hp-display", "grid-settings", {
-        name: game.i18n.localize('combat-hp-display.hpDisplaySettings.label'),
-        label: game.i18n.localize('combat-hp-display.hpDisplaySettings.title'),
+        name: game.i18n.localize('combat-hp-display.gridSettings.label'),
+        label: game.i18n.localize('combat-hp-display.gridSettings.title'),
         hint: "",
         icon: "fa-solid fa-border-all",
         type: GridSettingsMenu,

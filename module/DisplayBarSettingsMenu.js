@@ -1,8 +1,10 @@
 import { hpDisplayModes, barBrawlHpDisplayModes, useTemplatesPath } from '../scripts/combat-hp-display-helpers.js';
 
-export default class DisplayBarSettingsMenu extends FormApplication {
-    constructor() {
-        super({}, {title: game.i18n.localize('combat-hp-display.hpDisplaySettings.title')});
+const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
+export default class DisplayBarSettingsMenu extends HandlebarsApplicationMixin(ApplicationV2) {
+    constructor(options={}) {
+        super(options);
+
         this.displaySettings = {
             combat: game.settings.get('combat-hp-display', 'combat-display'),
         };
@@ -15,47 +17,65 @@ export default class DisplayBarSettingsMenu extends FormApplication {
         ];
     }
 
-    static get defaultOptions() {
-      const defaults = super.defaultOptions;
-      const overrides = {
-        height: 'auto',
-        width: 300,
-        id: 'resource-display-menu',
-        template: useTemplatesPath('settingsMenu.hbs'),
-        closeOnSubmit: false,
-        submitOnChange: true,
+    get title() {
+        return game.i18n.localize('combat-hp-display.hpDisplaySettings.title');
+    }
+
+    static DEFAULT_OPTIONS = {
+        tag: "form",
+        id: "resource-display-menu",
         classes: ["combat-hp-display", "settings-menu"],
-      };
-      
-      const mergedOptions = foundry.utils.mergeObject(defaults, overrides);
-      
-      return mergedOptions;
+        position: { width: 300, height: "auto" },
+        actions: {
+            save: this.save,
+        },
+        form: { handler: this.updateData, submitOnChange: true },
+    };
+
+    static PARTS = {
+        main: {
+            id: "main",
+            template: useTemplatesPath('settingsMenu.hbs'),
+        },
     }
 
-    getData() {
-        return {
-            combat: this.displaySettings.combat,
-            displayChoisesFrom: this.displayChoises,
-            displayChoisesTo: this.displayChoises,
-            barbrawlActive: this.barbrawlActive,
-        }
+    async _prepareContext(_options) {
+        const context = await super._prepareContext(_options);
+
+        context.combat = {
+            friendly: {
+                ...this.displaySettings.combat.friendly,
+                icon: 'fa-grin-beam',
+                title: game.i18n.localize('combat-hp-display.hpDisplaySettings.friendlyTokens'),
+            },
+            neutral: {
+                ...this.displaySettings.combat.neutral,
+                icon: 'fa-meh',
+                title: game.i18n.localize('combat-hp-display.hpDisplaySettings.neutralTokens'),
+            },
+            hostile: {
+                ...this.displaySettings.combat.hostile,
+                icon: 'fa-angry',
+                title: game.i18n.localize('combat-hp-display.hpDisplaySettings.hostileTokens'),
+            }
+        };
+
+        context.displayChoisesFrom = this.displayChoises;
+        context.displayChoisesTo = this.displayChoises;
+        context.barbrawlActive = this.barbrawlActive;
+
+        return context;s
     }
 
-    async _updateObject(event, formData) {
-        Object.keys(formData).forEach(key => {
-            const value = formData[key];
-            const settingValue = typeof value === 'boolean' ? value : Number.parseInt(value);
-            setProperty(this.displaySettings, key, settingValue);
-        });
+    static async updateData(event, element, formData) {
+        const data = foundry.utils.expandObject(formData.object);
+        this.displaySettings = data.displaySettings;
+
         this.render();
     }
 
-    activateListeners(html) {
-        super.activateListeners(html);
-
-        $(html).find('#save').click(event => {
-            game.settings.set('combat-hp-display', 'combat-display', this.displaySettings.combat);
-            this.close();
-        });
+    static async save() {
+        game.settings.set('combat-hp-display', 'combat-display', this.displaySettings.combat);
+        this.close();
     }
 }

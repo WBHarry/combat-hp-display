@@ -12,56 +12,61 @@
   align-items: center;
   justify-content: center;
 }
-.combat-hp-display footer {
-  margin-top: 8px;
-}
-.combat-hp-display .display-settings-titles {
-  margin-left: 28px;
-}
 .combat-hp-display .display-settings-titles.barbrawl {
   margin-right: 30px;
 }
-.combat-hp-display.converter-menu .token-display-button {
-  height: 27px;
-  width: 27px;
-  flex: 0;
-  margin-right: 4px;
+.combat-hp-display.settings-menu .settings-menu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.combat-hp-display.settings-menu .converter-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  gap: 4px;
+}
+.combat-hp-display.settings-menu .converter-grid .token-display-icon {
+  font-size: 22px;
+  margin-right: 0px;
+}
+.combat-hp-display.settings-menu .converter-grid .token-display-icon.friendly.selected {
+  text-shadow: 0px 0px 2px green;
+}
+.combat-hp-display.settings-menu .converter-grid .token-display-icon.neutral.selected {
+  text-shadow: 0px 0px 2px gold;
+}
+.combat-hp-display.settings-menu .converter-grid .token-display-icon.hostile.selected {
+  text-shadow: 0px 0px 2px red;
+}
+.combat-hp-display.settings-menu .display-bar-settings-grid {
+  display: grid;
+  grid-template-columns: 0fr 1fr;
+  gap: 4px;
+}
+.combat-hp-display.settings-menu .display-bar-settings-grid.bar-brawl {
+  grid-template-columns: 0fr 1fr 1fr;
+}
+.combat-hp-display.settings-menu .display-bar-settings-grid .token-display-icon {
+  font-size: 24px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.combat-hp-display.converter-menu .token-display-button#friendly:hover {
-  text-shadow: 0px 0px 2px green;
-  box-shadow: none;
+.combat-hp-display.settings-menu .settings-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
 }
-.combat-hp-display.converter-menu .token-display-button#neutral:hover {
-  text-shadow: 0px 0px 2px gold;
-  box-shadow: none;
+.combat-hp-display.settings-menu .settings-column .convert-button {
+  height: 32px;
 }
-.combat-hp-display.converter-menu .token-display-button#hostile:hover {
-  text-shadow: 0px 0px 2px red;
-  box-shadow: none;
+.combat-hp-display.settings-menu footer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
-.combat-hp-display.converter-menu .token-display-icon {
-  font-size: 22px;
-  margin-right: 0px;
-}
-.combat-hp-display.converter-menu .token-display-icon.friendly.selected {
-  text-shadow: 0px 0px 2px green;
-}
-.combat-hp-display.converter-menu .token-display-icon.neutral.selected {
-  text-shadow: 0px 0px 2px gold;
-}
-.combat-hp-display.converter-menu .token-display-icon.hostile.selected {
-  text-shadow: 0px 0px 2px red;
-}
-.combat-hp-display.settings-menu .token-display-icon {
-  font-size: 22px;
-  margin-right: 4px;
-}
-.combat-hp-display.settings-menu .gm-label {
-  white-space: nowrap;
-}
-.combat-hp-display.settings-menu .gm-row {
-  flex: 0 0 44px;
+.combat-hp-display.settings-menu footer > * {
+  flex: 1;
 }

@@ -1,34 +1,39 @@
- <form class={{cssClass}} autocomplete="off" onsubmit="event.preventDefault();">
-    <div class="flexrow display-settings-titles">
-        <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.actorConverter.from"}}</strong></label>
-        <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.actorConverter.to"}}</strong></label>
+ <div class="settings-menu-container">
+    <div class="converter-grid">
+        <div class="settings-column">
+            <label class="flex1" style="text-align: center;"><strong>{{localize "Alliance"}}</strong></label>
+            {{#each this.settings as |setting key|}}
+                <button class="convert-button" data-action="convertDisplayBar" id="{{key}}">
+                    <i class="{{#if (eq key "friendly")}}far fa-grin-beam {{else}}{{#if (eq key "neutral")}}far fa-meh{{else}}far fa-angry{{/if}}{{/if}}
+                        token-display-icon flex0 {{key}} {{#if (lookup ../dispositions key)}}selected{{/if}}" title="{{localize setting.title}}">
+                    </i>
+                </button>
+            {{/each}}
+        </div>
+        <div class="settings-column">
+            <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.actorConverter.from"}}</strong></label>
+            {{#each this.settings as |setting key|}}
+                <select data-dtype="Number" name="{{concat "settings.from." key}}" {{#unless (lookup ../dispositions key)}}disabled{{/unless}}>
+                    {{selectOptions ../displayChoisesFrom selected=this.from valueAttr="value" labelAttr="name"}}
+                </select>
+            {{/each}}
+        </div>
+        <div class="settings-column">
+            <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.actorConverter.to"}}</strong></label>
+            {{#each this.settings as |setting key|}}
+                <select data-dtype="Number" name="{{concat "settings.to." key}}" {{#unless (lookup ../dispositions key)}}disabled{{/unless}}>
+                    {{selectOptions ../displayChoisesTo selected=this.to valueAttr="value" labelAttr="name"}}
+                </select>
+            {{/each}}
+        </div>
     </div>
-    <div class="flexcol">
-        {{> "modules/combat-hp-display/templates/partials/convertDisplayValue.hbs" 
-            type="friendly" 
-            title="combat-hp-display.hpDisplaySettings.friendlyTokens"
-            outOfCombatSelected=from.friendly
-            combatSelected=to.friendly
-        }}
-        {{> "modules/combat-hp-display/templates/partials/convertDisplayValue.hbs" 
-            type="neutral" 
-            title="combat-hp-display.hpDisplaySettings.neutralTokens"
-            outOfCombatSelected=from.neutral
-            combatSelected=to.neutral   
-        }}
-        {{> "modules/combat-hp-display/templates/partials/convertDisplayValue.hbs" 
-            type="hostile" 
-            title="combat-hp-display.hpDisplaySettings.hostileTokens"
-            outOfCombatSelected=from.hostile
-            combatSelected=to.hostile 
-        }}
-    </div>
+
     <footer>
-        <button id="convert-all" class="menu-element" {{#if this.convertDisabled}}disabled title="{{localize "combat-hp-display.actorConverter.disabledTooltip"}}"{{/if}}>
+        <button data-action="convertAll" class="menu-element" {{#if this.convertDisabled}}disabled title="{{localize "combat-hp-display.actorConverter.disabledTooltip"}}"{{/if}}>
             {{localize "combat-hp-display.actorConverter.convertAll"}}
         </button>
-        <button id="convert-map" class="menu-element" {{#if this.convertDisabled}}disabled title="{{localize "combat-hp-display.actorConverter.disabledTooltip"}}"{{/if}}>
+        <button data-action="convertMap" class="menu-element" {{#if this.convertDisabled}}disabled title="{{localize "combat-hp-display.actorConverter.disabledTooltip"}}"{{/if}}>
             {{localize "combat-hp-display.actorConverter.convertMap"}}
         </button>
     </footer>
- </form>
+ </div>

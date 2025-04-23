@@ -1,29 +1,29 @@
- <form class={{cssClass}} autocomplete="off" onsubmit="event.preventDefault();">
-    <div class="flexrow display-settings-titles">
-        <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.hpDisplaySettings.inCombat"}}</strong></label>
-        {{#if barbrawlActive}}<label class="flex0 gm-label"><strong>{{localize "combat-hp-display.hpDisplaySettings.gmOnly"}}</strong></label>{{/if}}
+ <div class="standard-form settings-menu-container">
+    <div class="display-bar-settings-grid {{#if this.barbrawlActive}}bar-brawl{{/if}}">
+        <div class="settings-column">
+            <label class="flex1" style="text-align: center;"><strong>{{localize "Alliance"}}</strong></label>
+            {{#each this.combat as |type key|}}
+                <i class="far {{type.icon}} token-display-icon flex0" title="{{this.title}}"></i>
+            {{/each}}
+        </div>
+        <div class="settings-column">
+            <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.hpDisplaySettings.inCombat"}}</strong></label>
+            {{#each this.combat as |type key|}}
+                <select data-dtype="Number" name="displaySettings.combat.{{key}}.value" class="flex1">
+                    {{selectOptions ../displayChoisesTo selected=this.value valueAttr="value" labelAttr="name"}}
+                </select>
+            {{/each}}
+        </div>
+        {{#if this.barbrawlActive}}
+            <div class="settings-column">
+                <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.hpDisplaySettings.gmOnly"}}</strong></label>
+                {{#each this.combat as |type key|}}
+                    <input id="gmOnly" type="checkbox" name="displaySettings.combat.{{key}}.gmOnly" data-dtype="Boolean" class="gm-row" {{checked this.gmOnly}} />
+                {{/each}}
+            </div>
+        {{/if}}
     </div>
-    <div class="flexcol">
-        {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
-            type="friendly" 
-            combatSelected=combat.friendly.value
-            gmOnly=combat.friendly.gmOnly
-            barbrawl=barbrawlActive
-        }}
-        {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
-            type="neutral" 
-            combatSelected=combat.neutral.value   
-            gmOnly=combat.neutral.gmOnly
-            barbrawl=barbrawlActive
-        }}
-        {{> "modules/combat-hp-display/templates/partials/tokenDisplayValues.hbs" 
-            type="hostile" 
-            combatSelected=combat.hostile.value
-            gmOnly=combat.hostile.gmOnly
-            barbrawl=barbrawlActive
-        }}
-    </div>
-    <footer class="sheet-footer flexrow">
-        <button id="save"><i class="far fa-save"></i>Save Changes</button>
+    <footer>
+        <button data-action="save"><i class="far fa-save"></i>Save Changes</button>
     </footer>
- </form>
+ </div>
