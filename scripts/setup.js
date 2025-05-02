@@ -34,7 +34,7 @@ export const registerGameSettings = () => {
     
     game.settings.register("combat-hp-display", "combat-display", {
         name: "Combat HP Display",
-        hint: "The HP Display behehavior used when in combat",
+        hint: "The HP Display behavior used when in combat",
         scope: "world",
         config: false,
         type: Object,
@@ -53,10 +53,11 @@ export const registerGameSettings = () => {
         type: Object,
         onChange: value => {
             for(var scene of game.scenes){
-                scene.update({ 
+                scene.update({
                     grid: {
                         color: value.colorOverride.enabled ? Color.from(value.colorOverride.color) : Color.from('#000000'),
                         type: value.gridOverride.enabled ? value.gridOverride.type : scene.grid.type,
+                        alpha: value.gridOverride.enabled ? 0 : scene.grid.alpha,
                     }
                     
                 }, { diff: false });
