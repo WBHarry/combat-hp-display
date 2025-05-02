@@ -39,19 +39,20 @@ export default class GridSettingsMenu extends HandlebarsApplicationMixin(Applica
         context.grid = this.gridSettings;
         context.gridTypes = Object.keys(foundry.CONST.GRID_TYPES).map(key => {
             const value = foundry.CONST.GRID_TYPES[key];
+            const sceneLocalisationPrefix = game.version.split('.')[0] === '13' ? 'SCENE' : 'SCENES';
             switch(value) {
                 case 0:
-                    return { value, name: game.i18n.localize('SCENE.GridGridless') };
+                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridGridless`) };
                 case 1:
-                    return { value, name: game.i18n.localize('SCENE.GridSquare') };
+                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridSquare`) };
                 case 2:
-                    return { value, name: game.i18n.localize('SCENE.GridHexOddR') };
+                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridHexOddR`) };
                 case 3:
-                    return { value, name: game.i18n.localize('SCENE.GridHexEvenR') };
+                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridHexEvenR`) };
                 case 4:
-                    return { value, name: game.i18n.localize('SCENE.GridHexOddQ') };
+                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridHexOddQ`) };
                 case 5:
-                    return { value, name: game.i18n.localize('SCENE.GridHexEvenQ') };
+                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridHexEvenQ`) };
             }
         });
 
