@@ -7,6 +7,6 @@
         "concurrently": "^8.2.2"
     },
     "scripts": {
-        "start": "concurrently \"node C:/FoundryDev/resources/app/main.js --dataPath=C:/FoundryDevFiles  --noupnp\" \"gulp\""
+        "start": "node ./tools/run-start.js"
     }
 }

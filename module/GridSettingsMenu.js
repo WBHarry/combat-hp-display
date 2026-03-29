@@ -37,22 +37,21 @@ export default class GridSettingsMenu extends HandlebarsApplicationMixin(Applica
         const context = await super._prepareContext(_options);
 
         context.grid = this.gridSettings;
-        context.gridTypes = Object.keys(foundry.CONST.GRID_TYPES).map(key => {
-            const value = foundry.CONST.GRID_TYPES[key];
-            const sceneLocalisationPrefix = game.version.split('.')[0] === '13' ? 'SCENE' : 'SCENES';
+        context.gridTypes = Object.values(CONST.GRID_TYPES).map(value => {
+            const getName = (key) => game.i18n.localize(`SCENE.${key}`); 
             switch(value) {
                 case 0:
-                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridGridless`) };
+                    return { value, name: getName('GridGridless') };
                 case 1:
-                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridSquare`) };
+                    return { value, name: getName('GridSquare') };
                 case 2:
-                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridHexOddR`) };
+                    return { value, name: getName('GridHexOddR') };
                 case 3:
-                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridHexEvenR`) };
+                    return { value, name: getName('GridHexEvenR') };
                 case 4:
-                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridHexOddQ`) };
+                    return { value, name: getName('GridHexOddQ') };
                 case 5:
-                    return { value, name: game.i18n.localize(`${sceneLocalisationPrefix}.GridHexEvenQ`) };
+                    return { value, name: getName('GridHexEvenQ') };
             }
         });
 

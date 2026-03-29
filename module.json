@@ -3,7 +3,7 @@
     "name": "combat-hp-display",
     "title": "Combat HP Display",
     "description": "A module for automatically changing how displaybars such as HP are shown on tokens when entering and leaving combat.",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "authors": [
         {
             "name": "HarryBoy"
@@ -11,8 +11,8 @@
     ],
     "compatibility": {
         "minimum": 10,
-        "verified": "13.341",
-        "maximum": 13
+        "verified": "14.358",
+        "maximum": 14
     },
     "esmodules": [
         "combat-hp-display.js"
