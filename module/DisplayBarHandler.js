@@ -52,7 +52,7 @@ const diplayBarUpdate = async (combatant, inCombat) => {
     else {
         const displayBarSettings = displayBarValue !== undefined ? { displayBars: displayBarValue } : {};
         await combatant.token.update({
-            "flags.combat-hp-display": combatant.token.displayBars,
+            "flags.combat-hp-display.displayBars": combatant.token.displayBars,
             ...displayBarSettings
         });
     }
@@ -82,13 +82,16 @@ const updateDisplayMode = async (combatants) => {
             }
         }
         else if(game.user.isGM){
-            combatant.token.update({displayBars: combatant.token.flags["combat-hp-display"]});
+            const prior = combatant.token.getFlag('combat-hp-display', 'displayBars');
+            if (prior !== undefined && prior !== null) {
+                combatant.token.update({displayBars: prior });
+            }
         }
     }
 }
 
 const cloneResourceBars = (resourceBars) => {
-    const cloned = deepClone(resourceBars);
+    const cloned = foundry.utils.deepClone(resourceBars);
     Object.keys(cloned).forEach(key => {
         const bar = cloned[key];
         bar.gmVisibility = bar.gmVisibility === undefined ? -1 : bar.gmVisibility;

@@ -88,36 +88,30 @@ export default class DisplayBarConvertionMenu extends HandlebarsApplicationMixin
     static async convertAll(event) {
         event.stopPropagation();
         event.preventDefault();
-        const actors = game.canvas.tokens.objects.children.map(x => x.document.actor);
-
-        for(var i = 0; i < actors.length; i++){
-            const actor = actors[i];
-            const activeTokens = actor.getActiveTokens();
-            actor.prototypeToken.update({ 'displayBars': to });
-            for(var j = 0; j < activeTokens.length; j++){
-                const token = activeTokens[j];
-                const disposition = getDisplayMode(token.document.disposition);
-                const from = translateCustomDisplayModes(this.settings.from, disposition);
-                const to = translateCustomDisplayModes(this.settings.to, disposition);
-            
-                if((from === 60 || token.document.displayBars === from) && this.dispositions[disposition]){
-                    await token.document.update({
-                        'displayBars': to,
-                    }); 
-                }
-            }
-        }
+        await this.convertActors([...game.actors]);
     }
 
     static async convertMap(event) {
         event.stopPropagation();
         event.preventDefault();
         const actors = game.canvas.tokens.objects.children.map(x => x.document.actor);
+        await this.convertActors(actors);
+    }
 
+    async convertActors(actors) {
         for(var i = 0; i < actors.length; i++){
             const actor = actors[i];
             const activeTokens = actor.getActiveTokens();
+
+            const protoDisposition = getDisplayMode(actor.prototypeToken.disposition);
+            const protoTypeFrom = translateCustomDisplayModes(this.settings.from, protoDisposition);
+            const protoTypeTo = translateCustomDisplayModes(this.settings.to, protoDisposition);
+            if((protoTypeFrom === 60 || actor.prototypeToken.displayBars === protoTypeFrom) && this.dispositions[protoDisposition]){
+                actor.prototypeToken.update({ 'displayBars': protoTypeTo });
+            }
+
             for(var j = 0; j < activeTokens.length; j++){
+
                 const token = activeTokens[j];
                 const disposition = getDisplayMode(token.document.disposition);
                 const from = translateCustomDisplayModes(this.settings.from, disposition);
