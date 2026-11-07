@@ -7,14 +7,14 @@ export default class DisplayBarConvertionMenu extends HandlebarsApplicationMixin
 
         this.settings = {
             from: {
-                friendly: 60,
-                neutral: 60,
-                hostile: 60,
+                friendly: { value: 60 },
+                neutral: { value: 60 },
+                hostile: { value: 60 },
             },
             to: {
-                friendly: 30,
-                neutral: 30,
-                hostile: 30,
+                friendly: { value: 30 },
+                neutral: { value: 30 },
+                hostile: { value: 30 },
             },
         }
         this.dispositions = {

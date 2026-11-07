@@ -13,16 +13,16 @@
         <div class="settings-column">
             <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.actorConverter.from"}}</strong></label>
             {{#each this.settings as |setting key|}}
-                <select data-dtype="Number" name="{{concat "settings.from." key}}" {{#unless (lookup ../dispositions key)}}disabled{{/unless}}>
-                    {{selectOptions ../displayChoisesFrom selected=this.from valueAttr="value" labelAttr="name"}}
+                <select data-dtype="Number" name="{{concat "settings.from." key ".value"}}" {{#unless (lookup ../dispositions key)}}disabled{{/unless}}>
+                    {{selectOptions ../displayChoisesFrom selected=this.from.value valueAttr="value" labelAttr="name"}}
                 </select>
             {{/each}}
         </div>
         <div class="settings-column">
             <label class="flex1" style="text-align: center;"><strong>{{localize "combat-hp-display.actorConverter.to"}}</strong></label>
             {{#each this.settings as |setting key|}}
-                <select data-dtype="Number" name="{{concat "settings.to." key}}" {{#unless (lookup ../dispositions key)}}disabled{{/unless}}>
-                    {{selectOptions ../displayChoisesTo selected=this.to valueAttr="value" labelAttr="name"}}
+                <select data-dtype="Number" name="{{concat "settings.to." key ".value"}}" {{#unless (lookup ../dispositions key)}}disabled{{/unless}}>
+                    {{selectOptions ../displayChoisesTo selected=this.to.value valueAttr="value" labelAttr="name"}}
                 </select>
             {{/each}}
         </div>
